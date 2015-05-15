@@ -36,14 +36,13 @@ sequelize.sync().then(function(){
   //Devuelve numero de filas de la tabla
   Quiz.count().then(function(count){
     if(count === 0){
-      //Crea pregunta predeterminada
-      Quiz.create({pregunta: '¿Capital de Italia?',
-        respuesta: 'Roma'
-      });
-      Quiz.create({pregunta: '¿Capital de Portugal?',
+      // Crea pregunta predeterminada
+         Quiz.create({pregunta: '¿Capital de Italia?',
+              respuesta: 'Roma'
+        });
+         Quiz.create({pregunta: '¿Capital de Portugal?',
 	      respuesta: 'Lisboa'
-      })
-      .then(function(){console.log('Base de datos inicializada correctamente')});
+    }) .then(function(){console.log('Base de datos inicializada correctamente')});
     };
   });
 });
