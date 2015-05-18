@@ -11,10 +11,11 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz', errors: []});
 });
 
-/*Autoload*/
+/*Autoload de comandos*/
 router.param('quizId', quizController.load);
+router.param('commentId', commentController.load);
 
-/* rutas de sesion*/
+/* rutas de sesion */
 router.get('/login', 		sessionController.new);
 router.post('/login', 		sessionController.create);
 router.get('/logout', 		sessionController.destroy);
@@ -30,8 +31,11 @@ router.put('/quizes/:quizId(\\d+)', 		sessionController.loginRequired, quizContr
 router.post('/quizes/create',               sessionController.loginRequired, quizController.create);
 router.delete('/quizes/:quizId(\\d+)', 		sessionController.loginRequired, quizController.destroy);
 
+
+/* rutas de comentarios */
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 
 router.get('/author', function(req, res){
 	res.render("author", {errors: []})});
