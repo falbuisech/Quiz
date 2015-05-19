@@ -1,12 +1,17 @@
-var users = { admin: {id:1, username:"admin", password:"1256"},
-			  pepe: {id:2, username:"pepe", password:"pepe"}
-			};
+var models = require('../models/models.js')
 
 exports.autenticar = function(login, password, callback){
-	if(users[login]){
-		if(password === users[login].password){
-			callback(null, users[login]);
+	models.User.find({
+		where: {
+			username: login
 		}
-		else{ callback(new Error('Contraseña incorrecta'));}
-	}else{callback(new Error('Ese usuario no existe'));}
+	}).then(function(user){
+		if(user){
+			if(user.verifyPassword(password)){
+				callback(null, user);
+			}
+			else{ callback(new Error('Contraseña incorrecta'));}
+		}else{callback(new Error('El usuario ' + login + ' no existe'))}
+	}).catch(function(error){callback(error)});
+
 }
