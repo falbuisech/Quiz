@@ -19,6 +19,7 @@ exports.new = function(req, res){
 exports.create = function(req, res){
 	var login = req.body.login;
 	var password = req.body.password;
+	var time = new Date();
 
 	var userController = require('./user_controller');
 	userController.autenticar(login, password, function(error, user){
@@ -27,7 +28,7 @@ exports.create = function(req, res){
 			res.redirect("/login");
 			return;
 		}
-		req.session.user = {id: user.id, username:user.username};
+		req.session.user = {id: user.id, username:user.username, time:time};
 		res.redirect(req.session.redir.toString()); //Vuelve a donde estabamos antes de login
 	});
 }

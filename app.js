@@ -27,6 +27,26 @@ app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Autologout
+app.use(function(req,res,next){
+    var actual = new Date();
+    if(req.session.user){
+        if(req.session.user.time){
+            var sesion = new Date(req.session.user.time);
+            var difDate= actual - sesion;
+            if(difDate>12000){
+                delete req.session.user;
+                next();
+                return;
+            }
+        }
+            req.session.user.time= new Date(); //Vuelve a activar el "contador"
+    }
+    next();
+    
+});
+
+
 app.use(function(req, res, next){
     if(!req.path.match(/\/login|\/logout/)){
         req.session.redir = req.path;
