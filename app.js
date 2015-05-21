@@ -34,7 +34,7 @@ app.use(function(req,res,next){
         if(req.session.user.time){
             var sesion = new Date(req.session.user.time);
             var difDate= actual - sesion;
-            if(difDate>12000){
+            if(difDate>120000){
                 delete req.session.user;
                 next();
                 return;
@@ -48,7 +48,10 @@ app.use(function(req,res,next){
 
 
 app.use(function(req, res, next){
-    if(!req.path.match(/\/login|\/logout/)){
+    if(!req.session.redir){
+        req.session.redir='/';
+   }
+    if(!req.path.match(/\/login|\/logout|\/user/)){
         req.session.redir = req.path;
     }
     res.locals.session = req.session;

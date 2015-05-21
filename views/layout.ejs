@@ -23,9 +23,15 @@
 	      <span><a href="/author">Autores</a></span>
         <span><a href="/quizes/stats">Estadísticas</a></span>
    <%if(!session.user) {%>
-       <span class="right"><a href="/login">Login</a></span>
+        <span class="right">
+              <a href="/user">Registrarse</a>
+              <a href="/login">Entrar</a>
+            </span>
    <%} else{%>
-       <span class="right"> <%=session.user.username %> <a href="/logout"> Cerrar sesión</a></span>
+       <span class="right"> 
+            <%=session.user.username%>
+            <a href="/user/<%=session.user.id%>/edit">Settings</a>
+            <a href="/logout"> Cerrar sesión</a></span>
    <%}%>
       </nav>
 
