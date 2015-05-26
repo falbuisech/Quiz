@@ -7,6 +7,13 @@
   <input type="text" name="respuesta" value="Respuesta"/>
   <input type="submit" value="Enviar" <%= quiz.id %>/answer/>
 </form>
+<%if(session.user){%>
+<form method="post" action="/user/<%= session.user.id %>/favs/<%= session.quizes[i].id%>?_method=put">
+	<button type="submit">
+		Me gusta
+	</button>
+</form>				
+<% } %>
 <p><a href="/quizes/<%= quiz.id %>/comments/new"><button>Crear comentario</button></a></p>
 
 

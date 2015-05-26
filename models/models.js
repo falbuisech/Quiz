@@ -44,10 +44,15 @@ Quiz.hasMany(Comment);
 Quiz.belongsTo(User);
 User.hasMany(Quiz);
 
+Favourites = sequelize.define('favourites');
+User.belongsToMany(Quiz, {through: 'favourites'});
+Quiz.belongsToMany(User, {through: 'favourites'});
+
 //Exporta la definicion de tabla Quiz y de tabla Comment
 exports.Quiz = Quiz;
 exports.Comment = Comment;
 exports.User = User;
+exports.favourites = Favourites;
 
 //Inicializa la tabla de preguntas en DB
 //success(...) ejecuta el manejador cuando se crea la tabla
